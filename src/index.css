@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-gradient: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  @apply bg-gray-50;
+}
+
+.glass-effect {
+  @apply bg-white/80 backdrop-blur-sm border border-white/20;
+}
+
+.btn {
+  @apply inline-flex items-center px-4 py-2 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white shadow-sm;
+}
+
+.btn-primary {
+  @apply bg-violet-500 text-white hover:bg-violet-600 focus:ring-violet-500;
+}
+
+.btn-secondary {
+  @apply bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 focus:ring-gray-400;
+}
+
+.input {
+  @apply bg-white/50 backdrop-blur-sm text-gray-800 border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-200;
+}
+
+.card {
+  @apply bg-white/80 backdrop-blur-sm rounded-xl shadow-sm p-4 transition-all duration-200 hover:shadow border border-white/20;
+}
+
+.dashboard-section {
+  @apply bg-white/80 backdrop-blur-sm rounded-xl shadow-sm p-6 transition-all duration-200 hover:shadow border border-white/20;
+}
+
+.todo-item {
+  @apply flex items-center space-x-4 p-3 rounded-xl hover:bg-gray-50/50 transition-all duration-200;
+}
+
+.checkbox {
+  @apply h-5 w-5 rounded-lg border-gray-300 text-violet-600 transition duration-150 ease-in-out;
+}
+
+.priority-badge {
+  @apply px-2.5 py-1 rounded-full text-xs font-medium;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
