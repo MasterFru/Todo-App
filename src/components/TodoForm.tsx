@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { Todo } from '../types';
 
 interface TodoFormProps {
   addTodo: (text: string, description: string, dueDate: string | null, dueTime: string | null, subTasks: string[], priority: 'low' | 'medium' | 'high') => void;

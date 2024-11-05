@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ListTodo, Plus, Star, Calendar as CalendarIcon, BarChart2, MoreVertical, Trash2, Edit2 } from 'lucide-react';
+import { ListTodo, Plus, Star, Calendar as CalendarIcon, BarChart2, Moon, Sun } from 'lucide-react';
 import { Todo, Section } from './types';
-import SearchBar from './components/ SearchBar';
-import SectionList from './components/ SectionList';
+import SearchBar from './components/SearchBar';
+import SectionList from './components/SectionList';
 import TodoForm from './components/TodoForm';
-import TodoDetails from './components/ TodoDetails';
+import TodoDetails from './components/TodoDetails';
 import ProgressClock from './components/ProgressClock';
-import NotificationSystem from './components/ NotificationSystem';
+import NotificationSystem from './components/NotificationSystem';
 import Calendar from './components/Calendar';
 import Statistics from './components/Statistics';
 import ImportantTodos from './components/ImportantTodos';
@@ -25,6 +25,28 @@ export default function App() {
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const [showAddTodo, setShowAddTodo] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => setDarkMode(e.matches);
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     const completed = todos.filter(todo => todo.completed).length;
@@ -104,8 +126,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-indigo-50">
+    <div className={`min-h-screen transition-colors duration-200 ${darkMode ? 'dark bg-gray-900' : 'bg-gradient-to-br from-violet-50 to-indigo-50'}`}>
       <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2 rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-white shadow-sm hover:shadow transition-all duration-200"
+          >
+            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           <aside className="md:col-span-3">
             <SectionList
@@ -197,30 +228,30 @@ export default function App() {
                             </button>
                           </div>
                           <div className="flex-1">
-                            <h3 className={`font-medium ${todo.completed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
+                            <h3 className={`font-medium ${todo.completed ? 'line-through text-gray-400' : 'text-gray-900 dark:text-white'}`}>
                               {todo.text}
                             </h3>
                             <div className="flex items-center space-x-2 mt-1">
                               <span className={`text-xs px-2 py-1 rounded-full ${
                                 todo.priority === 'high'
-                                  ? 'bg-red-100 text-red-800'
+                                  ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                                   : todo.priority === 'medium'
-                                  ? 'bg-yellow-100 text-yellow-800'
-                                  : 'bg-green-100 text-green-800'
+                                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                                  : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                               }`}>
                                 {todo.priority}
                               </span>
                               {todo.dueDate && (
-                                <span className="text-xs text-gray-500">
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
                                   Due: {new Date(`${todo.dueDate}T${todo.dueTime || '00:00'}`).toLocaleDateString()}
                                 </span>
                               )}
                               <span className={`text-xs px-2 py-1 rounded-full ${
                                 todo.status === 'completed'
-                                  ? 'bg-green-100 text-green-800'
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                                   : todo.status === 'in-progress'
-                                  ? 'bg-blue-100 text-blue-800'
-                                  : 'bg-gray-100 text-gray-800'
+                                  ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                                  : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
                               }`}>
                                 {todo.status}
                               </span>
@@ -277,10 +308,10 @@ export default function App() {
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.95 }}
-                className="bg-white rounded-xl p-6 max-w-2xl w-full mx-4"
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-2xl w-full mx-4"
                 onClick={e => e.stopPropagation()}
               >
-                <h2 className="text-xl font-bold mb-4">Add New Todo</h2>
+                <h2 className="text-xl font-bold dark:text-white mb-4">Add New Todo</h2>
                 <TodoForm
                   addTodo={addTodo}
                   onCancel={() => setShowAddTodo(false)}
@@ -312,10 +343,10 @@ export default function App() {
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.95 }}
-                className="bg-white rounded-xl p-6 max-w-2xl w-full mx-4"
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-2xl w-full mx-4"
                 onClick={e => e.stopPropagation()}
               >
-                <h2 className="text-xl font-bold mb-4">Edit Todo</h2>
+                <h2 className="text-xl font-bold dark:text-white mb-4">Edit Todo</h2>
                 <TodoForm
                   addTodo={(text, description, dueDate, dueTime, subTasks, priority) => {
                     setTodos(todos.map(todo =>

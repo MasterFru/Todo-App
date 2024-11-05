@@ -32,15 +32,15 @@ const Calendar: React.FC<CalendarProps> = ({ todos, onTodoClick }) => {
   return (
     <div className="dashboard-section">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">
-          <CalendarIcon className="inline-block mr-2 text-violet-600" size={24} />
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+          <CalendarIcon className="inline-block mr-2 text-violet-600 dark:text-violet-400" size={24} />
           {today.toLocaleString('default', { month: 'long', year: 'numeric' })}
         </h2>
       </div>
 
       <div className="grid grid-cols-7 gap-1 mb-2">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-          <div key={day} className="text-center text-sm font-medium text-gray-600 py-2">
+          <div key={day} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 py-2">
             {day}
           </div>
         ))}
@@ -64,13 +64,13 @@ const Calendar: React.FC<CalendarProps> = ({ todos, onTodoClick }) => {
               <div
                 className={`h-full rounded-lg ${
                   isToday
-                    ? 'bg-violet-100 text-violet-900'
+                    ? 'bg-violet-100 dark:bg-violet-900/50 text-violet-900 dark:text-violet-100'
                     : hasTodos
-                    ? 'bg-white shadow-sm hover:shadow-md transition-shadow'
-                    : 'bg-gray-50'
+                    ? 'bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow'
+                    : 'bg-gray-50 dark:bg-gray-800/50'
                 } p-1`}
               >
-                <div className="text-sm font-medium mb-1">{day}</div>
+                <div className="text-sm font-medium mb-1 dark:text-gray-300">{day}</div>
                 {hasTodos && (
                   <div className="space-y-1">
                     {todosByDate[day.toString()].map(todo => (
@@ -80,10 +80,10 @@ const Calendar: React.FC<CalendarProps> = ({ todos, onTodoClick }) => {
                         onClick={() => onTodoClick(todo)}
                         className={`text-xs p-1 rounded ${
                           todo.priority === 'high'
-                            ? 'bg-red-100 text-red-800'
+                            ? 'bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200'
                             : todo.priority === 'medium'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-green-100 text-green-800'
+                            ? 'bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200'
+                            : 'bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200'
                         } truncate`}
                       >
                         {todo.text}
