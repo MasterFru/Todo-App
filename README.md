@@ -104,9 +104,9 @@ Then visit `http://localhost:5173` and prepare to be amazed! 🤩
 
 ## 📱 Connect With Us
 
-- Twitter: [@TodoAppOfficial](https://twitter.com/todoapp) 🐦
-- Discord: [Todo App Community](https://discord.gg/todoapp) 💬
-- Instagram: [@todoapp](https://instagram.com/todoapp) 📸
+- Twitter: [@TodoAppOfficial](https://twitter.com/MasterFru) 🐦
+- Discord: [Todo App Community](https://discord.gg/MasterFru) 💬
+- Instagram: [@todoapp](https://instagram.com/MasterFru) 📸
 
 ## 💖 Made with Love and Code
 
